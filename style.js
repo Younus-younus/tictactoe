@@ -1,8 +1,10 @@
 let board = Array(9).fill('');
 let currentPlayer = 'X';
 let gameActive = true;
-
-const statusDisplay = document.getElementById('status');
+let Xwins = 0;
+let Ywins = 0;
+const scoreXDisplay = document.getElementById('scoresx');
+const scoreYDisplay = document.getElementById('scoresy');
 const cells = document.querySelectorAll('.cell');
 const resetButton = document.getElementById('reset');
 const winPatterns = [
@@ -33,9 +35,19 @@ function handleCellClick(cell) {
 
     if (checkWin(winPattern)) {
         gameActive = false;
+        cells.forEach(cell => {
+            cell.style.opacity = '0.3'
+        });
         winPattern.forEach(index => {
             cells[index].style.backgroundColor = '#5c5b5a'
+            cells[index].style.opacity = '1'
         });
+        if (currentPlayer == 'X') {
+            Xwins += 1;
+        }
+        else {
+            Ywins += 1;
+        }
         updateStatus(`Player ${currentPlayer} wins!`);
         console.log(`Player ${currentPlayer} wins!`);
         return;
@@ -70,9 +82,15 @@ function checkDraw() {
 
 function updateStatus(message) {
     if (gameActive) {
-        statusDisplay.textContent = `Player ${currentPlayer}'s turn`;
-    } else {
-        statusDisplay.textContent = message;
+        scoreXDisplay.textContent = `X = ${Xwins}`;
+        scoreYDisplay.textContent = `O = ${Ywins}`;
+        if(currentPlayer == 'X'){
+            scoreXDisplay.style.borderColor = '#535bf2';
+            scoreYDisplay.style.borderColor = '';
+        }else{
+            scoreYDisplay.style.borderColor = '#535bf2';
+            scoreXDisplay.style.borderColor = '';
+        }
     }
 }
 
@@ -84,7 +102,9 @@ function resetGame() {
     cells.forEach(cell => cell.textContent = '');
     cells.forEach(cell => {
         cell.style.backgroundColor = '#1a1a1a'
+        cell.style.opacity = '1'
     });
+    
     updateStatus();
 }
 
