@@ -6,7 +6,8 @@ let Ywins = 0;
 const scoreXDisplay = document.getElementById('scoresx');
 const scoreYDisplay = document.getElementById('scoresy');
 const cells = document.querySelectorAll('.cell');
-const resetButton = document.getElementById('reset');
+const resetButton = document.getElementById('next');
+const resetGame1 = document.getElementById('reset');
 const winPatterns = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
@@ -22,6 +23,9 @@ function init() {
     resetButton.addEventListener('click', resetGame);
     updateStatus();
 }
+resetGame1.addEventListener('click',()=>{
+    location.reload()
+})
 
 function handleCellClick(cell) {
     let index = cell.getAttribute('data-index');
